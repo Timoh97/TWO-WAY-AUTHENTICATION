@@ -1,16 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-from django.db import models
+#create custoclass User(AbstractUser):
+class User(AbstractUser):
+    is_customer = models.BooleanField(default=False)
+    is_author = models.BooleanField(default=False)
 
-# Create your models here.
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
 
-# Create your models here.
-class Books(models.Model):
-   file = models.FileField(upload_to='documents/')
-   image = models.ImageField(upload_to='images/')
-   author = models.CharField(default='Author name..',max_length=100)
-   year_published = models.IntegerField(blank=True, null=True)
-   title = models.CharField(default='Title of the book',max_length=100)
-   price = models.IntegerField(blank=True, null=True,default='Price in dollars..')
+class Author(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
